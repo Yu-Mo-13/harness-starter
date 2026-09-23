@@ -1,0 +1,126 @@
+name: User story
+description: Create an implementation-ready product backlog item
+title: "[Story]: "
+labels:
+  - story
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Write the story around one independently verifiable user outcome. Keep implementation details in the notes unless they are constraints.
+
+  - type: textarea
+    id: story
+    attributes:
+      label: User story
+      description: State the user, desired capability, and value.
+      placeholder: As a ..., I want ..., so that ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and value
+      description: Explain the problem, expected outcome, and why it matters now.
+    validations:
+      required: true
+
+  - type: input
+    id: traceability
+    attributes:
+      label: Requirement IDs
+      description: List applicable F-, Q-, and P-IDs from the product documents.
+      placeholder: F-001, F-002, Q-001
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: State both what is included and what is explicitly excluded.
+      placeholder: |
+        In scope:
+        - ...
+
+        Out of scope:
+        - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Use observable Given/When/Then conditions, including relevant failure paths.
+      placeholder: |
+        - Given ... when ... then ...
+        - Given ... when ... then ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: qa
+    attributes:
+      label: QA notes
+      description: Identify test levels, fixtures, supported platforms, edge cases, and evidence required in the PR.
+      placeholder: Unit, integration, CLI/E2E, macOS/Linux/Windows, accessibility, security, regression
+    validations:
+      required: true
+
+  - type: textarea
+    id: matrix
+    attributes:
+      label: Compatibility matrix
+      description: List applicable OS, Node.js, and Codex or Claude Code CLI versions. Use N/A with a reason when it does not apply.
+      placeholder: macOS / Linux / Windows; Node.js versions; target CLI versions
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and risks
+      description: Link blocking decisions/issues and note assumptions or rollout risks. Write None when there are none.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: estimate
+    attributes:
+      label: Story points
+      description: Estimate only after the Definition of Ready is met.
+      options:
+        - Needs refinement
+        - "1"
+        - "2"
+        - "3"
+        - "5"
+        - "8"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: ready
+    attributes:
+      label: Definition of Ready
+      description: Leave incomplete items unchecked during Inbox and Refinement. All items must be checked before moving to Ready.
+      options:
+        - label: The user outcome and scope are clear.
+        - label: Acceptance criteria are observable and testable.
+        - label: Requirement IDs and dependencies are identified.
+        - label: QA has reviewed the test approach.
+        - label: The item is small enough to complete within one implementation sprint.
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Implementation notes
+      description: Optional constraints, design links, examples, or excluded work.
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Completion evidence
+      description: Add CI runs, test output, terminal captures, or screenshots before moving the item to Done.

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Product requirements
+    url: https://github.com/Yu-Mo-13/harness-starter/blob/main/docs/requirements.md
+    about: Review agreed MVP behavior before creating a story.
+  - name: Open product decisions
+    url: https://github.com/Yu-Mo-13/harness-starter/blob/main/docs/open-issues.md
+    about: Check whether the story depends on an unresolved decision.

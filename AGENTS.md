@@ -7,6 +7,9 @@ This repository is currently in the requirements phase. Project documentation li
 - `docs/requirements.md` defines the agreed Harness MVP behavior.
 - `docs/feature-list.md` maps requirements to implementation-ready feature IDs.
 - `docs/open-issues.md` records unresolved decisions and recommended defaults.
+- `docs/product-backlog.md` defines prioritized story candidates and acceptance criteria.
+- `docs/scrum-process.md` defines the sprint workflow, readiness and done gates, and GitHub Projects design.
+- `.github/ISSUE_TEMPLATE/` and `.github/PULL_REQUEST_TEMPLATE.md` provide the story and review workflow templates.
 
 No application or test directories exist yet. The agreed implementation target is a cross-platform TypeScript CLI distributed through npm. When adding the initial codebase, keep runtime code, tests, and bundled templates in clearly separated directories, and document the chosen layout here.
 
