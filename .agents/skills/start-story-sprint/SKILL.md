@@ -1,11 +1,13 @@
 ---
 name: start-story-sprint
-description: Harness MVPのストーリースプリントを計画し、対象のStoryとDecisionをリファインメント開始状態にする。GitHub Projects上でストーリー作成工程を開始するときに使用し、実装スプリントの開始には使用しない。
+description: Harness MVPのストーリースプリントを計画・実行し、StoryとDecisionの作成、QAレビュー、Definition of Ready検証、Ready化まで進める。実装作業には使用しない。
 ---
 
-# ストーリースプリントを開始する
+# ストーリースプリントを実行する
 
-`docs/scrum-process.md` に従って Sprint Planning を行い、選定済みの Story/Decision を安全に `Refinement` へ移す。このスキルの完了点は、スプリント対象、担当ペア、Projectフィールド、最初のリファインメント作業が明確になった状態である。Storyを `Ready` にする作業や実装そのものは、開始処理に含めない。
+`docs/scrum-process.md` に従って Sprint Planningを行い、選定したStory/Decisionを `Refinement` へ移した後、実際にIssueを作成・リファインし、QAレビューとDefinition of Ready検証を経て `Ready` にする。対象と担当を決めただけで終了しない。
+
+明示的なスキル呼び出しは、選定したスプリント項目に対するIssue、Project、関連文書の更新を依頼したものとして扱う。ユーザーがプレビューだけを求めた場合や、PdMにしか決められない選択が残る場合は書き込まずに確認する。
 
 ## 正本と役割
 
@@ -26,7 +28,7 @@ description: Harness MVPのストーリースプリントを計画し、対象�
 
 Projectやリポジトリを名前だけで推測せず、URL、owner、project numberを照合する。GitHubへ接続できない場合はローカル文書から候補案まで作成できるが、開始したとは扱わない。
 
-## 2. Planning案を作る
+## 2. Planningと開始状態
 
 対象は Story と Decision に限定する。Priority、依存関係、利用可能な担当者、スプリントの容量を基に、少数の達成可能な候補を選ぶ。
 
@@ -36,13 +38,11 @@ Projectやリポジトリを名前だけで推測せず、URL、owner、project 
 - 初回スプリントでProject上の優先順位と矛盾しない場合は、`P-009`、`P-010`、`US-001`、`US-002` を基準候補にする。
 - `F-*` のFeature/Enablerを Story Sprint の対象として数えない。Storyの見積もりを実装容量へ加算しない。
 
-更新前に、Iteration、対象Issue、選定理由、Engineer/QA、既知の依存・ブロッカーを表で提示する。ユーザーが対象、容量、担当、Iterationを既に指定し、Projectとも整合している場合は再確認を挟まず進める。これらに複数の妥当な選択肢があり、結果が変わる場合だけ質問する。
+Iteration、対象Issue、選定理由、Engineer/QA、既知の依存・ブロッカーを整理する。ユーザーが対象、容量、担当、Iterationを指定済みなら再確認を挟まない。複数の妥当な選択肢があり、結果が変わる場合だけ質問する。
 
-## 3. 開始状態へ更新する
+書き込み直前に対象項目を再取得し、競合する更新がないことを確認する。その後、Projectの実際のフィールドIDとOption/Iteration IDを解決し、次の開始状態へ更新する。表示名からIDを推測したり、他ProjectのIDを再利用したりしない。
 
-書き込み直前に対象項目を再取得し、競合する更新がないことを確認する。その後、選定した各項目についてProjectの実際のフィールドIDとOption/Iteration IDを解決して更新する。表示名からIDを推測したり、他ProjectのIDを再利用したりしない。
-
-| フィールド | 開始時の値 |
+| フィールド | 値 |
 | --- | --- |
 | `Status` | `Refinement` |
 | `Work type` | 既存の `Story` または `Decision` を維持 |
@@ -51,29 +51,53 @@ Projectやリポジトリを名前だけで推測せず、URL、owner、project 
 | `Engineer` | 説明責任を持つ担当者 |
 | `QA` | ペアとなるQAのGitHubユーザー名または合意済みエージェント名 |
 
-`Priority`、`Estimate`、Issue本文はPlanningで明示的に合意した場合だけ変更する。`Implementation Sprint` は設定・上書きしない。失敗した更新を成功扱いせず、途中まで更新された場合は項目ごとの実状態を報告して、勝手な一括ロールバックはしない。
+`Implementation Sprint` は設定・上書きしない。失敗した更新を成功扱いせず、途中まで更新された場合は項目ごとの実状態を報告する。
 
-## 4. 最初の作業を定義する
+## 3. Storyを作成・リファインする
 
-各Storyについて、Engineerが作成しQAがレビューする最初の成果をIssueコメントまたは開始報告にまとめる。
+各StoryのIssue本文を `.github/ISSUE_TEMPLATE/user-story.yml` の項目に合わせて実際に作成または更新する。既存の有用な記述、コメント、リンクを失わず、推測で要件を追加しない。
 
-- `As a / I want / so that` のユーザー価値
-- 対象の `F-*`、`Q-*`、必要な `P-*`
-- 正常系、境界値、失敗系を含む観測可能な受入条件
-- 対象外、依存関係、前提条件
-- テスト方法、fixture、対象OS、必要な証跡
-- 分割が必要な場合の独立して検証可能な切り口
+- `As a / I want / so that` で一つの利用者価値を記述する。
+- 背景と今実施する理由を、要件文書から追跡できる形でまとめる。
+- 適用する `F-*`、`Q-*`、`P-*` を列挙し、`F-*` が他のStoryと重複していないか確認する。
+- In scopeとOut of scope、前提、依存Issue、リスクを明記する。
+- 正常系、境界値、失敗系を観測可能なGiven/When/Thenで記述する。
+- QA notesへテストレベル、fixture、OS、アクセシビリティ、セキュリティ、PR証跡を記述する。
+- Compatibility matrixへ該当するOS、Node.js、Codex/Claude Code CLI版を記述する。該当しない場合は理由付きで `N/A` とする。
+- 8ポイントまたは1スプリントで完了できないStoryは、利用者が確認できる結果を持つleaf Feature/Enablerへ分割する。親Storyの価値と受入条件は保持する。
+- `US-001`〜`US-011` の各 `F-*` を一意なSub-issueとして関連付ける。`US-012` は横断品質として各Featureの受入条件とCIへ反映し、単独実装の代替にしない。
 
-Decisionには、決定者、選択肢、評価基準、ブロック対象、決定内容を反映する文書を明記する。開始時点ではDefinition of Readyの未達項目をチェック済みにしない。
+対応するIssueが存在しない場合は、重複を検索したうえでテンプレートから作成しProjectへ追加する。既存Issueを新規Issueで置き換えない。
+
+## 4. Decisionを解決する
+
+Decisionでは、選択肢、評価基準、利点・欠点、互換性と品質への影響、ブロック対象、推奨案を調査してIssueへ記録する。PdMの判断がまだない場合は推奨案を示して選択を求め、勝手に確定しない。
+
+PdMが決定したら、決定内容と日付をIssueおよび `docs/open-issues.md` へ反映し、依存するStoryの前提と受入条件を更新する。外部仕様や最新互換性が判断材料になる場合は、公式一次情報を確認して出典と確認日を残す。
+
+## 5. QAレビューとReady化
+
+Engineerとしての作成後、QAの観点で別のレビューを実施し、曖昧な結果、未検証の境界、fixture不足、OS差異、実行不能な条件を具体的に指摘する。指摘をIssueへ反映してから次のDefinition of Readyを一項目ずつ根拠付きで検証する。
+
+- ユーザー価値、Requirement IDs、対象外、依存、前提が明確
+- 正常系、境界値、失敗系の受入条件が観測可能
+- QAがテスト方法とfixtureをレビュー済み
+- 1回の実装スプリントで完了可能
+- 依存する `P-*` が決定済み
+- PdMがPriorityを確定済み
+- チームの相対見積もりが1、2、3、5、8のいずれかで合意済み
+
+未達項目をチェック済みにしない。修正可能な不足はその場で修正し、PdM判断や外部依存が必要なら `Blocked` にして理由、解除条件、次の確認日をIssueへ記録する。すべて満たした項目だけ、DoRチェック、`Estimate`、`Requirement IDs`を更新して `Status = Ready` にする。
 
 ## 完了報告
 
 次を簡潔に報告する。
 
-- 開始した `Story Sprint` と対象Issue
-- Engineer/QAのペアと最初の作業
-- 更新したProjectフィールド
-- 未解決の依存、ブロッカー、次の確認日
-- 更新できなかった項目と必要な対応
+- 実行した `Story Sprint` と対象Issue
+- 作成・更新したStory、Feature分割、Sub-issue関係、Decision、関連文書
+- QA指摘とその反映結果
+- `Ready` になった項目とDoR根拠
+- `Blocked` または未完了の項目、解除条件、次の確認日
+- Project更新に失敗した項目と現在の実状態
 
-Project上で更新結果を再取得でき、対象項目が意図した開始状態にあることを確認して初めて「開始済み」と表現する。
+IssueとProjectを再取得し、本文、リンク、フィールドが意図した状態にあることを確認する。対象を `Refinement` に移しただけでは完了としない。
