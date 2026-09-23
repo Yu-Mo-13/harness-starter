@@ -1,0 +1,4 @@
+interface:
+  display_name: "実装スプリントを開始"
+  short_description: "ReadyなFeatureとEnablerの実装スプリントを開始"
+  default_prompt: "Use $start-implementation-sprint to start the next implementation sprint for the Harness MVP."

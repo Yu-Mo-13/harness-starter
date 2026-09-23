@@ -1,0 +1,4 @@
+interface:
+  display_name: "ストーリースプリントを開始"
+  short_description: "Ready化するStoryとDecisionのスプリント作業を開始"
+  default_prompt: "Use $start-story-sprint to start the next story sprint from the Harness MVP backlog."
