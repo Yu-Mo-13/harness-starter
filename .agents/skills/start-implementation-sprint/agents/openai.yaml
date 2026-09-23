@@ -1,0 +1,4 @@
+interface:
+  display_name: "実装スプリントを実行"
+  short_description: "Ready項目を実装・テストしPRとQA証跡まで進める"
+  default_prompt: "Use $start-implementation-sprint to run the next implementation sprint through implementation, PR creation, and QA evidence."
